@@ -17,36 +17,33 @@ import java.util.UUID;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class Game {
+public class Game extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(unique = true)
     private UUID gameId;
 
     @Column
     private String name;
 
     @Column
-    private String gameDescription;
+    private String description;
 
-    @Column
-    private LocalDateTime time;
-
-    @Column
+    @Column(name="first_player_name")
     private String firstPlayerName;
 
-    @Column
+    @Column(name="second_player_name")
     private String secondPlayerName;
 
-    @Column
-    private Integer firstPlayerScore;
+    @Column(name="first_player_score")
+    private Integer firstPlayerScore = 0;
 
-    @Column
-    private Integer secondPlayerScore;
+    @Column(name="second_player_score")
+    private Integer secondPlayerScore = 0;
 
     @Enumerated(EnumType.STRING)
-    @Column
-    private GameStatus gameStatus;
+    @Column(name="game_status")
+    private GameStatus gameStatus = GameStatus.NEW;
 }
