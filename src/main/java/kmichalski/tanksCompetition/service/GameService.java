@@ -2,6 +2,7 @@ package kmichalski.tanksCompetition.service;
 
 import kmichalski.tanksCompetition.dto.UpdateGameDto;
 import kmichalski.tanksCompetition.model.Game;
+import kmichalski.tanksCompetition.model.GameStatus;
 import kmichalski.tanksCompetition.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class GameService {
 
     public Game updateGame(UUID gameId, UpdateGameDto updateGameDto) {
         Game toUpdateGame = gameRepository.findByGameId(gameId).orElseThrow();
-        toUpdateGame.setGameStatus(updateGameDto.getGameStatus());
+        toUpdateGame.setGameStatus(GameStatus.valueOf(updateGameDto.getGameStatus()));
         toUpdateGame.setFirstPlayerScore(updateGameDto.getFirstPlayerScore());
         toUpdateGame.setSecondPlayerScore(updateGameDto.getSecondPlayerScore());
         gameRepository.save(toUpdateGame);

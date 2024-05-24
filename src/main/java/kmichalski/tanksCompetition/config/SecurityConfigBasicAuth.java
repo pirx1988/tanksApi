@@ -20,9 +20,10 @@ public class SecurityConfigBasicAuth {
                 http.csrf(AbstractHttpConfigurer::disable)
                         .cors(withDefaults())
                         .authorizeHttpRequests(registry -> {
+                            registry.requestMatchers("/create-new-game").hasAnyRole("USER", "ADMIN");
                             registry.requestMatchers("/games").authenticated();
                             registry.requestMatchers("/games_public").permitAll();
-                            registry.requestMatchers("/register-new-user").permitAll();
+                            registry.requestMatchers("/register-new-user").hasRole("ADMIN");
                             registry.requestMatchers("/update-game/{gameId}").authenticated();
                         }).
                         httpBasic(withDefaults()).build();
